@@ -23,3 +23,6 @@ Function Name  | Description
 
 ##Issues
 - Combined sinks do not always run their output exactly parallel, delays are common for larger combined sinks. This might be adjustable via PulseAudio delays.
+
+##Support
+This work has been created in TUM CREATE and was financially supported by the Singapore National Research Foundation under its Campus for Research Excellence and Technological Enterprise (CREATE) program.
