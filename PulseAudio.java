@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.concurrent.Semaphore;
 
-import com.tumcreate.rp3.infotainment.utilities.log.Log;
-
 public class PulseAudio
 {
 	public static final String module = "PulseAudio";
@@ -113,20 +111,20 @@ public class PulseAudio
 		if(indicesAfter.size() > 1)
 		{
 			/* Error! Could not identify created sink! */
-			Log.logLowln("Error! Could not identify null sink!", module);
+			System.out.println("Error! Could not identify null sink!");
 			return -1;
 		}
 		else if(indicesAfter.size() == 0)
 		{
 			/* Error! Sink could not be created */
-			Log.logLowln("Error! Could not create null sink!", module);
+			System.out.println("Error! Could not create null sink!");
 			return -2;
 		}
 		else
 		{
 			/* successfully created and identified stream */
 			int index = (int)indicesAfter.toArray()[0];
-			Log.logTraceln("created null sink " + sinkName + " at index " + index, module);
+			System.out.println("created null sink " + sinkName + " at index " + index);
 			return index;
 		}
 	}
@@ -160,11 +158,11 @@ public class PulseAudio
 		InputStreamReader r = new InputStreamReader(lsOut);
 		BufferedReader in = new BufferedReader(r);
 		String line;
-		Log.logTraceln("indices before:", module);
+		System.out.println("indices before:");
 		while ((line = in.readLine()) != null)
 		{
 			indicesBefore.add(Integer.decode(line));
-			Log.logTraceln(line, module);
+			System.out.println(line);
 		}
 		
 		if(player == Player.MPLAYER)
@@ -210,11 +208,11 @@ public class PulseAudio
 			}
 		}
 		
-		Log.logTraceln("indices after:", module);
+		System.out.println("indices after:");
 		for (Iterator<Integer> i = indicesAfter.iterator(); i.hasNext();) {
 			Integer integer = (Integer) i.next();
 			
-			Log.logTraceln(""+integer, module);
+			System.out.println(""+integer);
 		}
 		
 		in.close();
@@ -225,14 +223,14 @@ public class PulseAudio
 		if(indicesAfter.size() > 1)
 		{
 			/* Error! Could not identify created stream! */
-			Log.logLowln("Error! Could not identify stream sink ("+URL+")!", module);
+			System.out.println("Error! Could not identify stream sink ("+URL+")!");
 			returnVal.sinkInput = -1;
 			return returnVal;
 		}
 		else if(indicesAfter.size() == 0)
 		{
 			/* Error! Stream could not be created */
-			Log.logLowln("Error! Could not create stream ("+URL+")!", module);
+			System.out.println("Error! Could not create stream ("+URL+")!");
 			returnVal.sinkInput = -2;
 			return returnVal;
 		}
@@ -240,7 +238,7 @@ public class PulseAudio
 		{
 			/* successfully created and identified stream */
 			returnVal.sinkInput = (int)indicesAfter.toArray()[0];
-			Log.logTraceln("created stream (" + URL + ") at sink " + sink + ", sinkInput: " + returnVal.sinkInput, module);
+			System.out.println("created stream (" + URL + ") at sink " + sink + ", sinkInput: " + returnVal.sinkInput);
 			return returnVal;
 		}
 	}
@@ -257,7 +255,7 @@ public class PulseAudio
 		checkAccessTime();
 		
 		Runtime.getRuntime().exec( new String[]{ "/bin/bash", "-c", "pacmd set-default-sink "+sinkIndex} );
-		Log.logTraceln("changed default sink to "+sinkIndex, module);
+		System.out.println("changed default sink to "+sinkIndex);
 	}
 	
 	/**
@@ -287,11 +285,11 @@ public class PulseAudio
 		InputStreamReader r = new InputStreamReader(lsOut);
 		BufferedReader in = new BufferedReader(r);
 		String line;
-		Log.logTraceln("indices before: ", module);
+		System.out.println("indices before: ");
 		while ((line = in.readLine()) != null)
 		{
 			indicesBefore.add(Integer.decode(line));
-			Log.logTraceln(line, module);
+			System.out.println(line);
 		}
 		
 		String combindCmd = "pactl load-module module-combine-sink sink_name="+combinedSink.name+" slaves=";
@@ -314,7 +312,7 @@ public class PulseAudio
 		}
 		int moduleNumber = Integer.decode(new String(consoleInput, 0, read-1));
 		combinedSink.moduleNumber = moduleNumber;
-		Log.logTraceln("module number of sink: "+moduleNumber, module);
+		System.out.println("module number of sink: "+moduleNumber);
 		
 		try
 		{
@@ -330,11 +328,11 @@ public class PulseAudio
 		lsOut = p.getInputStream();
 		r = new InputStreamReader(lsOut);
 		in = new BufferedReader(r);
-		Log.logTraceln("indices after: ", module);
+		System.out.println("indices after: ");
 		while ((line = in.readLine()) != null)
 		{
 			indicesAfter.add(Integer.decode(line));
-			Log.logTraceln(line, module);
+			System.out.println(line);
 		}
 		
 		/* compare sink numbers before and after creating */
@@ -342,20 +340,20 @@ public class PulseAudio
 		if(indicesAfter.size() > 1)
 		{
 			/* Error! Could not identify created sink! */
-			Log.logLowln("Error! Could not identify combined sink!", module);
+			System.out.println("Error! Could not identify combined sink!");
 			return -1;
 		}
 		else if(indicesAfter.size() == 0)
 		{
 			/* Error! Sink could not be created */
-			Log.logLowln("Error! Could not create combined sink!", module);
+			System.out.println("Error! Could not create combined sink!");
 			return -2;
 		}
 		else
 		{
 			/* successfully created and identified stream */
 			int index = (int)indicesAfter.toArray()[0];
-			Log.logTraceln("created combined sink " + combinedSink.name + " at index " + index, module);
+			System.out.println("created combined sink " + combinedSink.name + " at index " + index);
 			return index;
 		}
 	}
@@ -404,7 +402,7 @@ public class PulseAudio
 		checkAccessTime();
 		
 		Runtime.getRuntime().exec( new String[]{ "/bin/bash", "-c", "pactl move-sink-input "+sinkInput+" "+destinationSink} );
-		Log.logTraceln("moved sink input "+sinkInput+" to sink "+destinationSink, module);
+		System.out.println("moved sink input "+sinkInput+" to sink "+destinationSink);
 	}
 	
 	/**
@@ -422,7 +420,7 @@ public class PulseAudio
 		
 		int volume = 65535/100*volume_percent;
 		Runtime.getRuntime().exec( new String[]{ "/bin/bash", "-c", "pacmd set-sink-volume "+sink+" "+volume} );
-		Log.logTraceln("set volume of sink "+sink+" to "+volume+" ("+volume_percent+"%)", module);
+		System.out.println("set volume of sink "+sink+" to "+volume+" ("+volume_percent+"%)");
 	}
 	
 	/**
@@ -498,13 +496,13 @@ public class PulseAudio
 			indicesBefore.add(Integer.decode(line));
 		}
 		
-		Log.logTraceln("starting WGET process for stream "+wgetURL, "Sound");
+		System.out.println("starting WGET process for stream "+wgetURL);
 		returnVal.getProcess = Runtime.getRuntime().exec( new String[]{ "/bin/bash", "-c", "wget \""+wgetURL+"\" -O - > " + pipePathFull  } );
-		Log.logTraceln("completed starting WGET process for stream "+wgetURL, "Sound");
+		System.out.println("completed starting WGET process for stream "+wgetURL);
 
-		Log.logTraceln("starting play process for stream "+wgetURL+" from pipe "+pipePathFull+" on sink "+sink, "Sound");
+		System.out.println("starting play process for stream "+wgetURL+" from pipe "+pipePathFull+" on sink "+sink);
 		returnVal.playProcess = Runtime.getRuntime().exec( new String[]{ "/bin/bash", "-c", "mplayer -ao pulse::"+sink+" -cache 2048 "+pipePathFull+" > /dev/null 2>&1" } );
-		Log.logTraceln("completed starting play process for stream "+wgetURL+" from pipe "+pipePathFull+" on sink "+sink, "Sound");
+		System.out.println("completed starting play process for stream "+wgetURL+" from pipe "+pipePathFull+" on sink "+sink);
 		
 		while(indicesBefore.containsAll(indicesAfter))
 		{
@@ -523,14 +521,14 @@ public class PulseAudio
 		if(indicesAfter.size() > 1)
 		{
 			/* Error! Could not identify created stream! */
-			Log.logLowln("Error! Could not identify stream sink ("+wgetURL+")!", module);
+			System.out.println("Error! Could not identify stream sink ("+wgetURL+")!");
 			returnVal.sinkInput = -1;
 			return returnVal;
 		}
 		else if(indicesAfter.size() == 0)
 		{
 			/* Error! Stream could not be created */
-			Log.logLowln("Error! Could not create stream ("+wgetURL+")!", module);
+			System.out.println("Error! Could not create stream ("+wgetURL+")!");
 			returnVal.sinkInput = -2;
 			return returnVal;
 		}
@@ -538,7 +536,7 @@ public class PulseAudio
 		{
 			/* successfully created and identified stream */
 			returnVal.sinkInput = (int)indicesAfter.toArray()[0];
-			Log.logTraceln("created stream (" + wgetURL + ") at sink " + sink + ", sinkInput: " + returnVal.sinkInput, module);
+			System.out.println("created stream (" + wgetURL + ") at sink " + sink + ", sinkInput: " + returnVal.sinkInput);
 			return returnVal;
 		}
 	}
@@ -608,7 +606,7 @@ public class PulseAudio
 	public static void removeSink(CombinedSink sink)
 	{
 		try {
-			Log.logLowln("removing unused sink (module number: "+sink.moduleNumber+")", module);
+			System.out.println("removing unused sink (module number: "+sink.moduleNumber+")");
 			Runtime.getRuntime().exec( new String[]{ "/bin/bash", "-c", "pactl unload-module "+sink.moduleNumber} );
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -624,7 +622,7 @@ public class PulseAudio
 	public static void removeSinkInput(Integer sinkInputID)
 	{
 		try {
-			Log.logLowln("removing sinkInputID "+sinkInputID+" from sink", module);
+			System.out.println("removing sinkInputID "+sinkInputID+" from sink");
 			Runtime.getRuntime().exec( new String[]{ "/bin/bash", "-c", "pacmd kill-sink-input "+sinkInputID} );
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -21,4 +21,3 @@ Function Name  | Description
 
 ##ToDo
 - Create example to show how this works
-- Replace logging by clean logging
