@@ -4,7 +4,7 @@ This small Java class allows to control functions of PulseAudio from Java
 ## Usage
 Import the PulseAudio.java class into your project and start controlling PulseAudio directly from Java. The following table shows a minimal overview over possible functions. For detailed descriptions see source comments.
 
-It is possible to create sinks, combine sinks, control the volume of separate sinks, as well as shift inputs between sinks. One can further play streams or files with different players. Currently supported are Mplayer and Xine, but extensions are easy. Web streams (HTTP, MMS, etc) are supported via wget and named pipes to the player.
+It is possible to create sinks, combine sinks, control the volume of separate sinks, as well as shift inputs between sinks. One can further play streams or files with different players. Currently supported are MPlayer and Xine, but extensions are easy. Web streams (HTTP, MMS, etc) are supported via wget and named pipes to the player.
 
 Function Name  | Description
 ------------- | -------------
