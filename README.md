@@ -21,5 +21,5 @@ Function Name  | Description
 ```removeSink``` | Deletes a combined sink from the list of sinks
 ```removeSinkInput``` | removes an input from a sink
 
-##ToDo
-- Create example to show how this works
+##Issues
+- Combined sinks do not always run their output exactly parallel, delays are common for larger combined sinks. This might be adjustable via PulseAudio delays.
