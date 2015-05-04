@@ -6,5 +6,4 @@ public class CombinedSink {
 	public Integer combinedSinkID;
 	public String name;
 	public Integer moduleNumber;
-	public Set<SeatInfo> sinks;
 }
