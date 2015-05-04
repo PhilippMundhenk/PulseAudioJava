@@ -132,7 +132,7 @@ public class PulseAudio
 	}
 	
 	/**
-	 * This method loads a stream from a given URL via MPlayer and returns the handle to the MPlayer process, as well as the index of the created PulseAudio sink-input
+	 * This method loads a stream from a given URL via the defined player and returns the handle to the player process, as well as the index of the created PulseAudio sink input
 	 * 
 	 * @param URL
 	 * address of the stream to open
@@ -361,7 +361,7 @@ public class PulseAudio
 	}
 
 	/**
-	 * This method find the sink for a given sinkInput
+	 * This method finds the sink for a given sinkInput
 	 * 
 	 * @param sinInput
 	 * sinkInput to find sink for
@@ -426,7 +426,7 @@ public class PulseAudio
 	}
 	
 	/**
-	 * This method returns the index to a given deviceIdentifier
+	 * This method returns the sink index to a given deviceIdentifier
 	 * 
 	 * @param devicePath
 	 * sysfs.path of the device
@@ -464,7 +464,7 @@ public class PulseAudio
 	}
 
 	/**
-	 * This method starts a stream received via wget
+	 * This method starts a stream via wget
 	 * 
 	 * @param wgetURL
 	 * URL of stream to open via wget
