@@ -1,5 +1,5 @@
 # PulseAudioJava
-This tool allows to control functions of PulseAudio from Java
+This small Java class allows to control functions of PulseAudio from Java
 
 ## Usage
 Import the PulseAudio.java class into your project and start controlling PulseAudio directly from Java. The following table shows a minimal overview over possible functions. For detailed descriptions see source comments.
