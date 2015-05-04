@@ -19,6 +19,15 @@ public class PulseAudio
 	private static long lastAccess = 0;
 	private static Semaphore semaphorePulseAudio = new Semaphore(1);
 	
+	public static class SinkInput
+	{
+		public Process playProcess;
+		public Process getProcess;
+		public int sinkInput;
+	}
+	
+	public enum Player {MPLAYER, XINE}
+	
 	/**
 	 * This method limits the access to PulseAudio, by waiting a minimum time between two accesses.
 	 * This is used to prevent crashes in PulseAudio. It needs to be called before any other action in PulseAudio.
@@ -115,15 +124,6 @@ public class PulseAudio
 			return index;
 		}
 	}
-	
-	public static class SinkInput
-	{
-		public Process playProcess;
-		public Process getProcess;
-		public int sinkInput;
-	}
-	
-	public enum Player {MPLAYER, XINE}
 	
 	/**
 	 * This method loads a stream from a given URL via MPlayer and returns the handle to the MPlayer process, as well as the index of the created PulseAudio sink-input
@@ -495,16 +495,10 @@ public class PulseAudio
 		Log.logTraceln("starting WGET process for stream "+wgetURL, "Sound");
 		returnVal.getProcess = Runtime.getRuntime().exec( new String[]{ "/bin/bash", "-c", "wget \""+wgetURL+"\" -O - > " + pipePathFull  } );
 		Log.logTraceln("completed starting WGET process for stream "+wgetURL, "Sound");
-//		if(sink == 0)
-//		{
-//			returnVal.playProcess = Runtime.getRuntime().exec( new String[]{ "/bin/bash", "-c", "mplayer -ao pulse -cache 2048 "+ pipePathFull+" > /dev/null 2>&1" } );
-//		}
-//		else
-//		{
-			Log.logTraceln("starting play process for stream "+wgetURL+" from pipe "+pipePathFull+" on sink "+sink, "Sound");
-			returnVal.playProcess = Runtime.getRuntime().exec( new String[]{ "/bin/bash", "-c", "mplayer -ao pulse::"+sink+" -cache 2048 "+pipePathFull+" > /dev/null 2>&1" } );
-			Log.logTraceln("completed starting play process for stream "+wgetURL+" from pipe "+pipePathFull+" on sink "+sink, "Sound");
-//		}
+
+		Log.logTraceln("starting play process for stream "+wgetURL+" from pipe "+pipePathFull+" on sink "+sink, "Sound");
+		returnVal.playProcess = Runtime.getRuntime().exec( new String[]{ "/bin/bash", "-c", "mplayer -ao pulse::"+sink+" -cache 2048 "+pipePathFull+" > /dev/null 2>&1" } );
+		Log.logTraceln("completed starting play process for stream "+wgetURL+" from pipe "+pipePathFull+" on sink "+sink, "Sound");
 		
 		while(indicesBefore.containsAll(indicesAfter))
 		{
@@ -581,18 +575,30 @@ public class PulseAudio
 		return sinkExists;
 	}
 
+	/**
+	 * This method ensures that only one instance accesses PulseAudio. It also ensures that timing requirements are kept.
+	 */
 	public static void acquireSemaphore() throws InterruptedException
 	{
 		checkAccessTime();
 		semaphorePulseAudio.acquire();
 	}
 	
+	/**
+	 * This method ensures that only one instance accesses PulseAudio. It also ensures that timing requirements are kept.
+	 */
 	public static void releaseSemaphore() throws InterruptedException
 	{
 		lastAccess = System.currentTimeMillis();
 		semaphorePulseAudio.release();
 	}
 	
+	/**
+	 * This method deletes a combined sink from the list of sinks.
+	 * 
+	 * @param sink
+	 * element containing combined sink parameters
+	 */
 	public static void removeSink(CombinedSink sink)
 	{
 		try {
@@ -603,6 +609,12 @@ public class PulseAudio
 		}
 	}
 	
+	/**
+	 * This method removes an input from a sink.
+	 * 
+	 * @param sinkInputID
+	 * ID of the sink input to remove
+	 */
 	public static void removeSinkInput(Integer sinkInputID)
 	{
 		try {
