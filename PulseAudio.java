@@ -1,5 +1,3 @@
-package com.tumcreate.rp3.infotainment.services;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
