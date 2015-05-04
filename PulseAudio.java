@@ -25,6 +25,12 @@ public class PulseAudio
 		public Process getProcess;
 		public int sinkInput;
 	}
+
+	public class CombinedSink {
+		public Integer combinedSinkID;
+		public String name;
+		public Integer moduleNumber;
+	}
 	
 	public enum Player {MPLAYER, XINE}
 	
