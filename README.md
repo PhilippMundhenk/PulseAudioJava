@@ -1,3 +1,5 @@
+[![GitHub release](https://img.shields.io/github/release/PhilippMundhenk/PulseAudioJava.svg)](https://github.com/PhilippMundhenk/PulseAudioJava/releases) [![GitHub issues](https://img.shields.io/github/issues/PhilippMundhenk/PulseAudioJava.svg)](https://github.com/PhilippMundhenk/PulseAudioJava/issues) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/PhilippMundhenk/PulseAudioJava/blob/master/LICENSE)
+
 # PulseAudioJava
 This small Java class allows to control functions of PulseAudio from Java
 
