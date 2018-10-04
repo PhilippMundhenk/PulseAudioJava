@@ -43,7 +43,7 @@ public class PulseAudio {
 	 * between two accesses. This is used to prevent crashes in PulseAudio. It
 	 * needs to be called before any other action in PulseAudio.
 	 */
-	private static synchronized void checkAccessTime() {
+	protected static synchronized void checkAccessTime() {
 		if (lastAccess == 0) {
 			lastAccess = System.currentTimeMillis();
 			return;
