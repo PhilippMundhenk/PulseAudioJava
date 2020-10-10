@@ -23,11 +23,12 @@ Function Name  | Description
 ```removeSink``` | Deletes a combined sink from the list of sinks
 ```removeSinkInput``` | removes an input from a sink
 
-##Issues
+## Issues
+
 - Combined sinks do not always run their output exactly parallel, delays are common for larger combined sinks. This might be adjustable via PulseAudio delays.
 
-##See Also
+## See Also
 Corresponding blog article on my website: https://www.mundhenk.org/blog/pulseaudiojava
 
-##Support
+## Support
 This work has been created in TUM CREATE and was financially supported by the Singapore National Research Foundation under its Campus for Research Excellence and Technological Enterprise (CREATE) program.
